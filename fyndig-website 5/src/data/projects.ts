@@ -102,7 +102,7 @@ export const projects: Project[] = [
   {
     id: 'skillswap',
     name: 'Skillswap',
-    category: 'EdTech',
+    category: 'EduTech',
     description: 'Coming soon.',
     features: [],
     problem: '',
