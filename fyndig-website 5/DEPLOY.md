@@ -151,3 +151,25 @@ then hard-reload.
 (CVE-2025-66478). The exposure is small for a statically exported site, but it is
 worth running `npm install next@latest` and pushing once someone can watch the
 build.
+
+---
+
+## Search visibility
+
+The site answers on three hostnames (fyndig.in, www.fyndig.in, fyndig.pages.dev).
+To stop search engines treating those as three competing copies, set the build
+variable:
+
+    NEXT_PUBLIC_SITE_URL = https://fyndig.in
+
+layout.tsx emits a canonical link and absolute Open Graph URLs only when that is
+set, so it must exist at BUILD time (a plain text variable, not a secret).
+
+`public/sitemap.xml` lists the one real page. Submit it in Google Search Console
+once the domain property is verified - DNS is on Cloudflare, so Search Console
+can usually verify automatically.
+
+A note on expectations: "fyndig" is a Swedish word and an IKEA product name, so
+the bare term is not winnable for a long time. Aim at "fyndig Tirupati",
+"fyndig IoT" and similar. A Google Business Profile is worth more than any
+markup change for a local company.
