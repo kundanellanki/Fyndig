@@ -1,0 +1,12 @@
+# Keep the build context small and keep secrets out of the image.
+node_modules
+.next
+out
+.git
+.gitignore
+.env
+.env.*
+!.env.local.example
+npm-debug.log*
+.DS_Store
+README.md

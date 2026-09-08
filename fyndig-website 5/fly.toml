@@ -1,0 +1,53 @@
+# ---------------------------------------------------------------------------
+# fyndig website on Fly.io
+#
+#   fly launch --no-deploy --copy-config --name fyndig --region bom
+#   fly deploy \
+#     --build-arg NEXT_PUBLIC_API_URL=https://fyndig-api.fly.dev \
+#     --build-arg NEXT_PUBLIC_SITE_URL=https://fyndig.fly.dev
+#
+# Both NEXT_PUBLIC_* values are BUILD arguments, not runtime env vars — Next.js
+# inlines them into the browser bundle at build time. Setting them under [env]
+# or with `fly secrets set` would do nothing. Pass them on every deploy.
+#
+# The site holds no data, so it needs no volume and can scale to as many
+# machines as you like.
+# ---------------------------------------------------------------------------
+
+app = "fyndig"
+primary_region = "bom"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  NODE_ENV = "production"
+  PORT = "3000"
+  HOSTNAME = "0.0.0.0"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+
+  # Stateless, so it is safe to stop when idle and start on the next request.
+  # Keeping one machine warm avoids a cold start on the first visit of the day;
+  # set min_machines_running = 0 to trade that for a slightly smaller bill.
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 1
+
+  [http_service.concurrency]
+    type = "requests"
+    soft_limit = 200
+    hard_limit = 250
+
+  [[http_service.checks]]
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "20s"
+    method = "GET"
+    path = "/"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"

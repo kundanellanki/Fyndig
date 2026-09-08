@@ -1,0 +1,573 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===========================================================================
+   BASE
+   =========================================================================== */
+
+:root {
+  --shell-pad: clamp(1.25rem, 4vw, 3rem);
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #070b12; /* fallback behind the fixed background image */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: transparent;
+  color: #e8edf5;
+  overflow-x: clip; /* never allow horizontal overflow */
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgba(91, 155, 255, 0.35);
+  color: #ffffff;
+}
+
+/* Accessible focus ring everywhere */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid #5b9bff;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+}
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  padding: 0.75rem 1.25rem;
+  background: #0b111c;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}
+
+/* ===========================================================================
+   FIXED CINEMATIC BACKGROUND  —  CRITICAL
+   ---------------------------------------------------------------------------
+   The forest image is painted by a `position: fixed` layer that sits behind all
+   content. It is NEVER translated, scaled, zoomed, parallaxed, or animated —
+   no GSAP target, no transition, no background-position animation. The page
+   content scrolls OVER a completely stationary environment.
+
+   `position: fixed` is used instead of `background-attachment: fixed` because
+   the latter is broken / janky on iOS Safari and forces expensive repaints.
+
+   Do not add `transform`, `filter`, `perspective` or `will-change: transform`
+   to <body> or to any ancestor of `.site-bg` — that would create a containing
+   block and the background would start scrolling.
+   =========================================================================== */
+
+.site-bg,
+.site-bg__overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+.site-bg {
+  z-index: -3;
+  background-image: var(--site-bg-image);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  /* The layer never moves, so let the compositor keep it as one cached texture
+     instead of repainting it behind every scrolling section. */
+  contain: paint;
+}
+
+/* Smaller file on small screens — same framing, a third of the bytes. */
+@media (max-width: 900px) {
+  .site-bg {
+    background-image: var(--site-bg-image-small, var(--site-bg-image));
+  }
+}
+
+/* Readability grade + the fine technology grid, in ONE layer.
+   The grid used to be a third fixed layer with a `mask-image`; masks are
+   expensive to composite on every frame. Stacking it under the vignette here
+   gives the same fade-at-the-edges look for free. Static, never animated. */
+.site-bg__overlay {
+  z-index: -2;
+  background:
+    radial-gradient(115% 85% at 50% 22%, rgba(11, 17, 28, 0.18) 0%, rgba(7, 11, 18, 0.78) 62%, rgba(5, 8, 14, 0.94) 100%),
+    linear-gradient(180deg, rgba(7, 11, 18, 0.74) 0%, rgba(7, 11, 18, 0.5) 30%, rgba(7, 11, 18, 0.72) 70%, rgba(5, 8, 14, 0.9) 100%),
+    repeating-linear-gradient(0deg, rgba(143, 187, 255, 0.16) 0 1px, transparent 1px 74px),
+    repeating-linear-gradient(90deg, rgba(143, 187, 255, 0.16) 0 1px, transparent 1px 74px);
+  contain: paint;
+}
+
+@media (max-width: 768px) {
+  .site-bg__overlay {
+    background-size: auto, auto, 52px 52px, 52px 52px;
+  }
+}
+
+/* ===========================================================================
+   LAYOUT PRIMITIVES
+   =========================================================================== */
+
+.shell {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: var(--shell-pad);
+}
+
+.section {
+  position: relative;
+  z-index: 1;
+  padding-block: clamp(5rem, 11vw, 10rem);
+}
+
+/* A translucent sheet that lets the fixed forest read through while keeping
+   dense content legible. Scrolls with the content (foreground), as intended. */
+.sheet {
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(7, 11, 18, 0.68) 0%, rgba(7, 11, 18, 0.86) 50%, rgba(7, 11, 18, 0.68) 100%);
+  border-block: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* ===========================================================================
+   TYPOGRAPHY
+   =========================================================================== */
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #8fbbff;
+}
+.eyebrow::before {
+  content: '';
+  width: 2rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #5b9bff);
+}
+
+.h-display {
+  font-family: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 300;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  background: linear-gradient(180deg, #ffffff 20%, #b9c6d8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.h-section {
+  font-family: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 300;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  font-size: clamp(1.875rem, 4.4vw, 3.25rem);
+  background: linear-gradient(180deg, #ffffff 25%, #b9c6d8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.lead {
+  font-size: clamp(1rem, 1.35vw, 1.1875rem);
+  line-height: 1.7;
+  color: #a9b6c7;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+}
+
+/* ===========================================================================
+   SURFACES
+   =========================================================================== */
+
+.card {
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 1rem;
+  background: linear-gradient(160deg, rgba(27, 37, 54, 0.78) 0%, rgba(11, 17, 28, 0.82) 100%);
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(91, 155, 255, 0.4);
+  box-shadow: 0 24px 60px -32px rgba(91, 155, 255, 0.55);
+}
+
+.glass-pill {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(11, 17, 28, 0.62);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 3rem;
+  padding-inline: 1.6rem;
+  border-radius: 999px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+  white-space: nowrap;
+}
+.btn:hover {
+  transform: translateY(-2px);
+}
+.btn-primary {
+  background: linear-gradient(135deg, #5b9bff, #2f6fe0);
+  color: #ffffff;
+  box-shadow: 0 18px 44px -20px rgba(91, 155, 255, 0.85);
+}
+.btn-primary:hover {
+  box-shadow: 0 24px 56px -20px rgba(91, 155, 255, 1);
+}
+.btn-ghost {
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.04);
+  color: #e8edf5;
+}
+.btn-ghost:hover {
+  border-color: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.09);
+}
+
+/* The white brand plate that carries the dark fyndig logo on a dark page. */
+.brand-plate {
+  background: linear-gradient(180deg, #ffffff 0%, #eef2f7 100%);
+  border-radius: 1.5rem;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.5),
+    0 30px 80px -34px rgba(0, 0, 0, 0.95);
+}
+
+/* Form fields */
+.field {
+  width: 100%;
+  height: 3.25rem;
+  padding-inline: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(7, 11, 18, 0.55);
+  color: #e8edf5;
+  font-size: 0.9375rem;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+.field::placeholder {
+  color: #6b7a90;
+}
+.field:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+}
+.field:focus {
+  border-color: #5b9bff;
+  background: rgba(7, 11, 18, 0.75);
+}
+textarea.field {
+  height: auto;
+  padding-block: 0.875rem;
+  resize: vertical;
+  min-height: 8rem;
+}
+select.field {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B7A90' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1.1rem;
+  padding-right: 2.75rem;
+}
+select.field option {
+  background: #0b111c;
+  color: #e8edf5;
+}
+
+/* ===========================================================================
+   SCROLL REVEAL — foreground only. Never applied to the background layers.
+   =========================================================================== */
+
+[data-reveal] {
+  opacity: 0;
+}
+
+/* ===========================================================================
+   MOTION PREFERENCES
+   =========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ===========================================================================
+   PERFORMANCE NOTES
+   ---------------------------------------------------------------------------
+   The background stays fixed on every screen size. What keeps it cheap:
+
+   * Only ONE element on the page uses `backdrop-filter` (the sticky navbar).
+     Blurring what is behind an element forces the browser to re-render that
+     region every frame; with the background fixed, dozens of blurred panels
+     meant re-rendering most of the viewport continuously.
+   * The background is two static layers, not three, and uses no `mask-image`.
+   * No element carries a permanent `will-change`. GSAP adds one for the
+     duration of a tween and ScrollAnimations clears it afterwards.
+   * Nothing animates a transform inside a large <svg>. SVG children are not
+     composited independently, so an animated node repaints the whole drawing
+     every frame — the hero decoration used to do exactly that.
+   * Scroll handlers never read layout (offsetTop / scrollWidth). Geometry is
+     measured once per resize and cached.
+
+   If you add a section, keep to these and the page stays at 60fps.
+   =========================================================================== */
+
+/* Thin scrollbar for the horizontal mobile project rail */
+.rail {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+/* ===========================================================================
+   THEMED CURSOR
+   ---------------------------------------------------------------------------
+   Rendered by src/components/Cursor.tsx. The native cursor is hidden only once
+   that component has mounted and set data-cursor="on" on <html>, so nothing is
+   lost if JavaScript is unavailable. Text fields keep a real I-beam.
+   =========================================================================== */
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  border-radius: 999px;
+  display: none;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: #8fbbff;
+  box-shadow: 0 0 12px rgba(91, 155, 255, 0.9);
+  transition: opacity 0.25s ease, width 0.25s ease, height 0.25s ease, background 0.25s ease;
+}
+
+.cursor-ring {
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(143, 187, 255, 0.55);
+  background: rgba(91, 155, 255, 0.05);
+  transition:
+    opacity 0.3s ease,
+    width 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.32s ease,
+    background 0.32s ease;
+}
+
+/* Only paint them on fine pointers, and only once the pointer has moved. */
+@media (pointer: fine) {
+  .cursor-dot,
+  .cursor-ring {
+    display: block;
+  }
+  .cursor-dot.is-active,
+  .cursor-ring.is-active {
+    opacity: 1;
+  }
+}
+
+/* Over something clickable: the ring opens up, the dot recedes. */
+.cursor-ring.is-link {
+  width: 54px;
+  height: 54px;
+  border-color: rgba(143, 187, 255, 0.9);
+  background: rgba(91, 155, 255, 0.12);
+}
+.cursor-dot.is-link {
+  width: 4px;
+  height: 4px;
+  background: #ffffff;
+}
+
+/* Pressed. */
+.cursor-ring.is-down {
+  width: 26px;
+  height: 26px;
+  background: rgba(91, 155, 255, 0.2);
+}
+.cursor-ring.is-link.is-down {
+  width: 44px;
+  height: 44px;
+}
+
+/* Over a text field the native I-beam takes over. */
+.cursor-dot.is-hidden,
+.cursor-ring.is-hidden {
+  opacity: 0 !important;
+}
+
+/* Hide the system cursor only while the custom one is live. */
+html[data-cursor='on'],
+html[data-cursor='on'] * {
+  cursor: none !important;
+}
+html[data-cursor='on'] input,
+html[data-cursor='on'] textarea {
+  cursor: text !important;
+}
+html[data-cursor='on'] select,
+html[data-cursor='on'] option {
+  cursor: pointer !important;
+}
+
+/* Reduced motion: keep the cursor, drop the trailing lag (handled in JS) and
+   the size transitions. */
+@media (prefers-reduced-motion: reduce) {
+  .cursor-dot,
+  .cursor-ring {
+    transition: opacity 0.2s ease !important;
+  }
+}
+
+
+/* ===========================================================================
+   PINNED PROJECT CARD — vertical rhythm scaled to viewport height
+   ---------------------------------------------------------------------------
+   From `lg` up, the projects section pins and the rail gets exactly one screen.
+   A fixed card height therefore clips its own feature list on a 13" laptop and
+   floats in space on a 27" display, so every vertical measurement below is a
+   clamp against `vh`: roomy where there is room, compact where there is not,
+   never clipped. Verified from 1024x768 up to 1920x1080.
+   =========================================================================== */
+
+.feature-list li {
+  position: relative;
+  padding-left: 0.8rem;
+  margin-bottom: 0.3rem;
+  break-inside: avoid;
+}
+.feature-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.58em;
+  width: 3px;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(91, 155, 255, 0.7);
+}
+
+@media (min-width: 1024px) {
+  .pcard-vis {
+    aspect-ratio: auto;
+    height: clamp(112px, 19vh, 200px);
+  }
+  .pcard-body {
+    padding: clamp(0.7rem, 1.3vh, 1rem) clamp(0.85rem, 1.5vh, 1.125rem) clamp(0.75rem, 1.4vh, 1.125rem);
+  }
+  /* keep the category on one line so the card stays inside the pinned screen */
+  .pcard-meta {
+    font-size: clamp(0.55rem, 1vh, 0.625rem);
+    letter-spacing: 0.14em;
+  }
+  .pcard-meta span {
+    font-size: inherit;
+    letter-spacing: inherit;
+  }
+  .pcard h3 {
+    margin-top: clamp(0.15rem, 0.5vh, 0.375rem);
+    font-size: clamp(1.0625rem, 2.1vh, 1.375rem);
+  }
+  .pcard > .pcard-body > p {
+    margin-top: clamp(0.35rem, 0.8vh, 0.625rem);
+    font-size: clamp(0.7rem, 1.35vh, 0.8125rem);
+    line-height: 1.55;
+  }
+  .pcard-block {
+    margin-top: clamp(0.5rem, 1.1vh, 0.875rem);
+    padding-top: clamp(0.45rem, 0.9vh, 0.75rem);
+  }
+  .pcard-label {
+    font-size: clamp(0.55rem, 1vh, 0.625rem);
+  }
+  .feature-list {
+    margin-top: clamp(0.3rem, 0.7vh, 0.5rem);
+    font-size: clamp(0.64rem, 1.25vh, 0.75rem);
+    line-height: 1.38;
+  }
+  .feature-list li {
+    margin-bottom: clamp(0.08rem, 0.25vh, 0.22rem);
+  }
+  .tech-row {
+    margin-top: clamp(0.5rem, 1.1vh, 0.875rem);
+    gap: 0.3rem;
+  }
+  .tech-row li {
+    padding: clamp(0.08rem, 0.3vh, 0.25rem) 0.5rem;
+    font-size: clamp(0.6rem, 1.1vh, 0.6875rem);
+  }
+  .pcard-foot {
+    padding-top: clamp(0.5rem, 1.1vh, 1rem);
+  }
+}
+
+/* Embedded Google map. Google only serves a light map without an API key, so
+   it is inverted into the site's palette here. `grayscale` first keeps road
+   and label colours from turning lurid once the hues are rotated. */
+.site-map {
+  filter: grayscale(0.6) invert(0.92) hue-rotate(180deg) brightness(0.95) contrast(0.92);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .site-map {
+    transition: filter 0.4s ease;
+  }
+}
+.site-map:hover {
+  filter: grayscale(0.35) invert(0.92) hue-rotate(180deg) brightness(1) contrast(0.95);
+}
