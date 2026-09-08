@@ -1,15 +1,27 @@
 /** @type {import('next').NextConfig} */
+
+// Two build shapes from one config.
+//
+//   npm run build      -> .next/standalone, a Node server (Docker / Fly.io).
+//   npm run build:cf   -> out/, plain HTML, CSS and JS with no server at all.
+//                         This is what Cloudflare Pages serves.
+//
+// The site has no server-rendered data: every section reads from src/data, and
+// the API client in src/lib/api.ts is a no-op unless NEXT_PUBLIC_API_URL is
+// set. So the static build is the same page with nothing left running. The
+// contact form's server half lives in functions/api/contact.js, a Cloudflare
+// Pages Function.
+const staticExport = process.env.STATIC_EXPORT === '1';
+
 const nextConfig = {
   reactStrictMode: true,
 
-  // Emits .next/standalone — a self-contained server with only the modules it
-  // actually uses. It is what the Dockerfile ships, and it is what lets the
-  // site run on any host with Node rather than only on Vercel. Harmless if you
-  // deploy to Vercel anyway; that platform ignores it.
-  output: 'standalone',
+  output: staticExport ? 'export' : 'standalone',
 
   images: {
     formats: ['image/avif', 'image/webp'],
+    // A static host has no image optimizer. Sources are served as authored.
+    unoptimized: staticExport,
   },
 
   // Never let a failed lint or a type error ship silently. Both are on by
