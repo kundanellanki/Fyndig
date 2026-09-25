@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { contact, telHref, waHref } from '@/data/company';
+import { contact, founder, telHref, waHref } from '@/data/company';
 import { submitContact, apiConfigured } from '@/lib/api';
 import { projectTypes } from '@/data/services';
 import Icon from './Icon';
@@ -137,6 +137,23 @@ export default function Contact() {
           </p>
 
           <dl className="mt-10 space-y-7" data-reveal data-reveal-stagger>
+            <div className="flex gap-4">
+              <span className="mt-0.5 grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-white/10 bg-white/[0.04] text-accent-soft">
+                <Icon name="Users" className="h-[18px] w-[18px]" />
+              </span>
+              <div>
+                <dt className="text-[0.625rem] uppercase tracking-[0.2em] text-steel">{founder.role}</dt>
+                <dd className="mt-1.5">
+                  <span className="block text-[0.9375rem] text-white">{founder.name}</span>
+                  <a
+                    href={`mailto:${founder.email}`}
+                    className="mt-0.5 block text-[0.8125rem] text-mist transition-colors hover:text-accent-soft"
+                  >
+                    {founder.email}
+                  </a>
+                </dd>
+              </div>
+            </div>
             <div className="flex gap-4">
               <span className="mt-0.5 grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-white/10 bg-white/[0.04] text-accent-soft">
                 <Icon name="Mail" className="h-[18px] w-[18px]" />
