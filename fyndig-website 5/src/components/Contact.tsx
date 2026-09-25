@@ -145,12 +145,6 @@ export default function Contact() {
                 <dt className="text-[0.625rem] uppercase tracking-[0.2em] text-steel">{founder.role}</dt>
                 <dd className="mt-1.5">
                   <span className="block text-[0.9375rem] text-white">{founder.name}</span>
-                  <a
-                    href={`mailto:${founder.email}`}
-                    className="mt-0.5 block text-[0.8125rem] text-mist transition-colors hover:text-accent-soft"
-                  >
-                    {founder.email}
-                  </a>
                 </dd>
               </div>
             </div>
