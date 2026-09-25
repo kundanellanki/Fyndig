@@ -54,6 +54,17 @@ export const company = {
   },
 } as const;
 
+/**
+ * The founder. Kept separate from `contact` because this is a person, not a
+ * company channel - the company address stays fyndig@zohomail.in, and this is
+ * for people who want to reach the founder directly.
+ */
+export const founder = {
+  name: 'Kundan Ellanki',
+  role: 'Founder',
+  email: 'kundanellanki@gmail.com',
+} as const;
+
 /** Contact + location details. */
 export const contact = {
   email: 'fyndig@zohomail.in',
