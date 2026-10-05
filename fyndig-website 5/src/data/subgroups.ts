@@ -13,7 +13,7 @@
  * ---------------------------------------------------------------------------
  */
 
-export type SubgroupStatus = 'Live' | 'Launching Soon' | 'In Development';
+export type SubgroupStatus = 'Live' | 'Coming Soon' | 'Launching Soon' | 'In Development';
 
 /**
  * A subgroup's own colours. fyndig's site is navy and blue; a subgroup is its
@@ -147,4 +147,45 @@ export const subgroups: Subgroup[] = [
     },
     href: 'https://vindalia.fyndig.in',
   },
+  {
+    id: 'mansonsforge',
+    name: 'MansonsForge',
+    category: 'Construction Company',
+    tagline: '',
+    description: '',
+    services: [],
+    pillars: [],
+    locations: [],
+    founder: 'Kundan Ellanki',
+    status: 'Coming Soon',
+    brand: {
+      accent: '#EDA94A',
+      accentSoft: '#F7C68A',
+      tintFrom: '#2A3645',
+      tintTo: '#141C27',
+      wordmark: '#F6F2EA',
+    },
+    href: null,
+  },
+  {
+    id: 'flotel',
+    name: 'Flotel',
+    category: 'Floating Hotels',
+    tagline: '',
+    description: '',
+    services: [],
+    pillars: [],
+    locations: [],
+    founder: 'Kundan Ellanki',
+    status: 'Coming Soon',
+    brand: {
+      accent: '#3E8FD0',
+      accentSoft: '#8CC4E8',
+      tintFrom: '#12304F',
+      tintTo: '#0A1A2E',
+      wordmark: '#EAF3FB',
+    },
+    href: null,
+  },
 ];
+
