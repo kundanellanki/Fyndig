@@ -27,6 +27,8 @@ const config: Config = {
       fontFamily: {
         sans: ['var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         display: ['var(--font-outfit)', 'var(--font-inter)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        // Subgroup wordmarks only — see src/components/SubgroupLogo.tsx.
+        serif: ['var(--font-cormorant)', 'Cormorant Garamond', 'Georgia', 'serif'],
       },
       letterSpacing: {
         ultra: '0.32em',
