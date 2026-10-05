@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Cormorant_Garamond, Inter, Outfit } from 'next/font/google';
+import { Cormorant_Garamond, Inter, Lexend, Outfit } from 'next/font/google';
 import './globals.css';
 import { company, contact, siteUrl } from '@/data/company';
 import Background from '@/components/Background';
@@ -25,6 +25,14 @@ const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
   weight: ['400', '500', '600'],
   variable: '--font-cormorant',
+  display: 'swap',
+});
+
+/** Campus's own face — see SubgroupLogo. */
+const lexend = Lexend({
+  subsets: ['latin'],
+  weight: ['500', '600'],
+  variable: '--font-lexend',
   display: 'swap',
 });
 
@@ -70,7 +78,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${outfit.variable} ${cormorant.variable}`}>
+    <html lang="en" className={`${inter.variable} ${outfit.variable} ${cormorant.variable} ${lexend.variable}`}>
       <body className="font-sans antialiased">
         <a href="#main" className="skip-link">
           Skip to content
