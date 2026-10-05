@@ -30,6 +30,7 @@ const config: Config = {
         // Subgroup wordmarks only — see src/components/SubgroupLogo.tsx.
         serif: ['var(--font-cormorant)', 'Cormorant Garamond', 'Georgia', 'serif'],
         lexend: ['var(--font-lexend)', 'Lexend', 'var(--font-outfit)', 'ui-rounded', 'sans-serif'],
+        jakarta: ['var(--font-jakarta)', 'Plus Jakarta Sans', 'var(--font-outfit)', 'sans-serif'],
       },
       letterSpacing: {
         ultra: '0.32em',
