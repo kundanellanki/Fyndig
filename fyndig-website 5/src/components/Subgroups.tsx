@@ -103,19 +103,23 @@ export default function Subgroups() {
                   <SubgroupLogo id={s.id} name={s.name} />
                 </h3>
 
-                <p
-                  className="mt-2 text-[0.8125rem] italic leading-snug"
-                  style={{ color: `${s.brand.wordmark}b0` }}
-                >
-                  &ldquo;{s.tagline}&rdquo;
-                </p>
+                {s.tagline ? (
+                  <p
+                    className="mt-2 text-[0.8125rem] italic leading-snug"
+                    style={{ color: `${s.brand.wordmark}b0` }}
+                  >
+                    &ldquo;{s.tagline}&rdquo;
+                  </p>
+                ) : null}
 
-                <p
-                  className="mt-3 text-[0.8125rem] leading-relaxed"
-                  style={{ color: `${s.brand.wordmark}c4` }}
-                >
-                  {s.description}
-                </p>
+                {s.description ? (
+                  <p
+                    className="mt-3 text-[0.8125rem] leading-relaxed"
+                    style={{ color: `${s.brand.wordmark}c4` }}
+                  >
+                    {s.description}
+                  </p>
+                ) : null}
 
                 {/* Brand pillars */}
                 {s.pillars.length > 0 ? (
