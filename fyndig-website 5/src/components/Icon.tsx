@@ -5,6 +5,7 @@
  * editors never touch component code. Add a new icon by importing it here and
  * adding it to `registry`; then use its key in the data files.
  */
+import type { CSSProperties } from 'react';
 import {
   Activity,
   AppWindow,
@@ -105,12 +106,23 @@ const registry: Record<string, LucideIcon> = {
 export default function Icon({
   name,
   className,
+  style,
   strokeWidth = 1.5,
 }: {
   name: string;
   className?: string;
+  /** For icons coloured from data rather than from a theme class. */
+  style?: CSSProperties;
   strokeWidth?: number;
 }) {
   const Cmp = registry[name] ?? Sparkles;
-  return <Cmp className={className} strokeWidth={strokeWidth} aria-hidden="true" focusable="false" />;
+  return (
+    <Cmp
+      className={className}
+      style={style}
+      strokeWidth={strokeWidth}
+      aria-hidden="true"
+      focusable="false"
+    />
+  );
 }
