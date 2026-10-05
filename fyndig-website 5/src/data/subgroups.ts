@@ -68,7 +68,7 @@ export const subgroups: Subgroup[] = [
     category: 'Event Management Company',
     tagline: 'Bringing ideas, people and experiences together — one event at a time.',
     description:
-      'Vindalia plans and runs family events and celebrations end to end — from the first idea through to the day itself. It brings the same care fyndig puts into products to the moments people remember.',
+      'Vindalia plans and runs family events and celebrations end to end — from the first idea through to the day itself.',
     services: [
       'Family events and celebrations',
       'Event planning, design and on-the-day coordination',
