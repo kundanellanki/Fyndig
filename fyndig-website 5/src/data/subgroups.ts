@@ -90,6 +90,33 @@ export const subgroups: Subgroup[] = [
     href: 'https://campus.fyndig.in',
   },
   {
+    id: 'thetrip',
+    name: 'The Trip',
+    category: 'Travel & Trip Planning',
+    tagline: 'Holiday packages and trip plans across India.',
+    description:
+      'The Trip sells ready-made holiday packages, and writes trip plans for people who would rather go their own way — the plan fee comes back off the booking.',
+    services: [
+      'Ready-made holiday packages across India',
+      'Trip plans written by a local expert',
+      'Hotels, food and sights, planned day by day',
+      'Plan fee credited back when you book',
+    ],
+    pillars: ['Routes', 'Stays', 'Food', 'Budget'],
+    locations: [],
+    status: 'Live',
+    // The Trip's own dark-theme tokens from thetrip.fyndig.in: sky blue on its
+    // deep navy, the same pair the logo is drawn in.
+    brand: {
+      accent: '#4FB0FF',
+      accentSoft: '#86C8FF',
+      tintFrom: '#10233C',
+      tintTo: '#081522',
+      wordmark: '#E9F1FA',
+    },
+    href: 'https://thetrip.fyndig.in',
+  },
+  {
     id: 'vindalia',
     name: 'Vindalia',
     category: 'Event Management Company',
