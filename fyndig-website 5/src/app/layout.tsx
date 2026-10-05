@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Cormorant_Garamond, Inter, Lexend, Outfit } from 'next/font/google';
+import { Cormorant_Garamond, Inter, Lexend, Outfit, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { company, contact, siteUrl } from '@/data/company';
 import Background from '@/components/Background';
@@ -33,6 +33,14 @@ const lexend = Lexend({
   subsets: ['latin'],
   weight: ['500', '600'],
   variable: '--font-lexend',
+  display: 'swap',
+});
+
+/** The Trip's own face — see SubgroupLogo. */
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  weight: ['700'],
+  variable: '--font-jakarta',
   display: 'swap',
 });
 
@@ -78,7 +86,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${outfit.variable} ${cormorant.variable} ${lexend.variable}`}>
+    <html lang="en" className={`${inter.variable} ${outfit.variable} ${cormorant.variable} ${lexend.variable} ${jakarta.variable}`}>
       <body className="font-sans antialiased">
         <a href="#main" className="skip-link">
           Skip to content
