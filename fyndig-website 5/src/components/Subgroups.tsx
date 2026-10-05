@@ -159,30 +159,52 @@ export default function Subgroups() {
                   </ul>
                 ) : null}
 
-                {/* Where it works, and where to find it */}
-                {s.locations.length > 0 || s.href ? (
+                {/* Who runs it, where it works, and where to find it */}
+                {s.founder || s.locations.length > 0 || s.href ? (
                   <div
-                    className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t pt-4"
+                    className="mt-5 flex flex-col gap-3 border-t pt-4"
                     style={{ borderColor: `${s.brand.accent}24` }}
                   >
-                    {s.locations.length > 0 ? (
-                      <p
-                        className="flex items-center gap-1.5 text-[0.6875rem]"
-                        style={{ color: `${s.brand.wordmark}8c` }}
-                      >
-                        <Icon name="MapPin" className="h-3.5 w-3.5 shrink-0" />
-                        {s.locations.join(' · ')}
-                      </p>
-                    ) : (
-                      <span />
-                    )}
+                    <div className="space-y-1.5">
+                      {s.founder ? (
+                        <p
+                          className="flex items-center gap-1.5 text-[0.6875rem]"
+                          style={{ color: `${s.brand.wordmark}b0` }}
+                        >
+                          <Icon
+                            name="User"
+                            className="h-3.5 w-3.5 shrink-0"
+                            style={{ color: s.brand.accent }}
+                          />
+                          <span>
+                            <span
+                              className="uppercase tracking-[0.12em]"
+                              style={{ color: `${s.brand.wordmark}70` }}
+                            >
+                              Founder
+                            </span>{' '}
+                            {s.founder}
+                          </span>
+                        </p>
+                      ) : null}
+
+                      {s.locations.length > 0 ? (
+                        <p
+                          className="flex items-center gap-1.5 text-[0.6875rem]"
+                          style={{ color: `${s.brand.wordmark}8c` }}
+                        >
+                          <Icon name="MapPin" className="h-3.5 w-3.5 shrink-0" />
+                          {s.locations.join(' · ')}
+                        </p>
+                      ) : null}
+                    </div>
 
                     {s.href ? (
                       <a
                         href={s.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn h-8 px-3.5 text-[0.75rem] font-semibold"
+                        className="btn h-8 self-end px-3.5 text-[0.75rem] font-semibold"
                         style={{
                           color: s.brand.tintTo,
                           backgroundImage: `linear-gradient(135deg, ${s.brand.accentSoft}, ${s.brand.accent})`,
