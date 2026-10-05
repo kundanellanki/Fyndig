@@ -35,7 +35,13 @@ export default function Subgroups() {
         <div
           className={[
             'mt-10 grid gap-5',
-            subgroups.length > 1 ? 'md:grid-cols-2' : 'max-w-md',
+            // One card stays a calling card; two sit side by side; three or
+            // more go three across once there is room for them.
+            subgroups.length === 1
+              ? 'max-w-md'
+              : subgroups.length === 2
+                ? 'md:grid-cols-2'
+                : 'md:grid-cols-2 lg:grid-cols-3',
           ].join(' ')}
           data-reveal
           data-reveal-stagger
