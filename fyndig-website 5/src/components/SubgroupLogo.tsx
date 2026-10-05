@@ -17,16 +17,16 @@ import type { ReactElement } from 'react';
 /** Vindalia: ivory Cormorant wordmark with a raised marigold four-point star. */
 function VindaliaMark() {
   return (
-    <span className="inline-flex items-start gap-1.5">
+    <span className="inline-flex items-start gap-1">
       <span
-        className="font-serif text-[2rem] font-medium leading-none tracking-[0.01em]"
+        className="font-serif text-[1.5rem] font-medium leading-none tracking-[0.01em]"
         style={{ color: 'var(--wordmark)' }}
       >
         <span className="text-[1.18em]">V</span>indalia
       </span>
       <svg
         viewBox="-1 -1 2 2"
-        className="h-[0.6rem] w-[0.6rem] shrink-0"
+        className="h-[0.45rem] w-[0.45rem] shrink-0"
         style={{ color: 'var(--brand)' }}
         aria-hidden="true"
         focusable="false"
@@ -47,7 +47,7 @@ const registry: Record<string, () => ReactElement> = {
 export default function SubgroupLogo({ id, name }: { id: string; name: string }) {
   const Mark = registry[id];
   if (!Mark) {
-    return <span className="font-display text-2xl font-normal text-white">{name}</span>;
+    return <span className="font-display text-xl font-normal text-white">{name}</span>;
   }
   return <Mark />;
 }
