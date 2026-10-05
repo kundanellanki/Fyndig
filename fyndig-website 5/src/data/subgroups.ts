@@ -59,9 +59,36 @@ export type Subgroup = {
 };
 
 export const subgroupsIntro =
-  'fyndig is building more than software. Each subgroup is a company of its own, run by the same people and held to the same standard.';
+  'fyndig is building more than software. Each subgroup below has its own name, its own identity and its own customers — all run by the same people, to the same standard.';
 
 export const subgroups: Subgroup[] = [
+  {
+    id: 'campus',
+    name: 'Campus',
+    category: 'College Management Platform',
+    tagline: 'Your whole college, in one app.',
+    description:
+      'Campus puts the whole college day in one place — attendance, academics, fees, placements and notices — and gives everyone who uses it their own view of it.',
+    services: [
+      'Attendance, academics, exams and results',
+      'Fees, scholarships and receipts',
+      'Placements, resumes and job applications',
+      'A separate portal for each role',
+    ],
+    pillars: ['Students', 'Faculty', 'Parents', 'Admins', 'Recruiters'],
+    locations: [],
+    status: 'Live',
+    // Campus's own indigo, lifted a little from the #4B4DED used on its own
+    // (light) site so it still reads against this one's dark background.
+    brand: {
+      accent: '#6D6FF2',
+      accentSoft: '#A5A7FB',
+      tintFrom: '#1E2450',
+      tintTo: '#141A35',
+      wordmark: '#EEF0FF',
+    },
+    href: 'https://campus.fyndig.in',
+  },
   {
     id: 'vindalia',
     name: 'Vindalia',
