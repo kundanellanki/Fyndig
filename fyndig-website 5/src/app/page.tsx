@@ -7,6 +7,7 @@ import CurrentProjects from '@/components/CurrentProjects';
 import Capabilities from '@/components/Capabilities';
 import Process from '@/components/Process';
 import WhyFyndig from '@/components/WhyFyndig';
+import Subgroups from '@/components/Subgroups';
 import Careers from '@/components/Careers';
 import Vision from '@/components/Vision';
 import Contact from '@/components/Contact';
@@ -37,6 +38,7 @@ export default async function Home() {
         <Capabilities />
         <Process />
         <WhyFyndig />
+        <Subgroups />
         <Careers />
         <Vision />
         <Contact />
