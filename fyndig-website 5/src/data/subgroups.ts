@@ -48,6 +48,8 @@ export type Subgroup = {
   services: string[];
   /** The brand's own pillars — rendered as a row of chips. Empty hides it. */
   pillars: string[];
+  /** Who founded it. Empty string hides the line. */
+  founder: string;
   /** Cities it operates from. Empty array hides the row. */
   locations: string[];
   /** Current stage. */
@@ -76,6 +78,7 @@ export const subgroups: Subgroup[] = [
       'A separate portal for each role',
     ],
     pillars: ['Students', 'Faculty', 'Parents', 'Admins', 'Recruiters'],
+    founder: 'Revanth Kumar Sarvasetty',
     locations: [],
     status: 'Live',
     // Campus's own indigo, lifted a little from the #4B4DED used on its own
@@ -103,6 +106,7 @@ export const subgroups: Subgroup[] = [
       'Plan fee credited back when you book',
     ],
     pillars: ['Routes', 'Stays', 'Food', 'Budget'],
+    founder: 'Aathif Hasan',
     locations: [],
     status: 'Live',
     // The Trip's own dark-theme tokens from thetrip.fyndig.in: sky blue on its
@@ -130,6 +134,7 @@ export const subgroups: Subgroup[] = [
       'Weddings — coming soon',
     ],
     pillars: ['Plan', 'Create', 'Connect', 'Celebrate'],
+    founder: 'Kavya Dabbara',
     locations: ['Bengaluru', 'Tirupati'],
     status: 'Live',
     // Vindalia's own palette, lifted from vindalia.fyndig.in: marigold on dusk.
