@@ -14,6 +14,39 @@ import type { ReactElement } from 'react';
  * display face — correct, just not branded.
  */
 
+/**
+ * Campus: the mortarboard-and-tassel mark from campus.fyndig.in, redrawn here
+ * from the same path data so the two stay identical, beside a Lexend wordmark.
+ */
+function CampusMark() {
+  return (
+    <span className="inline-flex items-center gap-2">
+      <svg
+        viewBox="0 0 48 48"
+        className="h-[1.3rem] w-[1.3rem] shrink-0"
+        style={{ color: 'var(--brand)' }}
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path d="M24 7 2 17l22 10 22-10z" fill="currentColor" />
+        <path
+          d="M10 22v10c0 4 6.3 7 14 7s14-3 14-7V22l-14 6.4z"
+          fill="currentColor"
+          opacity=".85"
+        />
+        <path d="M42 18.6V31" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
+        <circle cx="42" cy="32.5" r="2.4" fill="currentColor" />
+      </svg>
+      <span
+        className="font-lexend text-[1.3rem] font-semibold leading-none tracking-[-0.015em]"
+        style={{ color: 'var(--wordmark)' }}
+      >
+        Campus
+      </span>
+    </span>
+  );
+}
+
 /** Vindalia: ivory Cormorant wordmark with a raised marigold four-point star. */
 function VindaliaMark() {
   return (
@@ -41,6 +74,7 @@ function VindaliaMark() {
 }
 
 const registry: Record<string, () => ReactElement> = {
+  campus: CampusMark,
   vindalia: VindaliaMark,
 };
 
