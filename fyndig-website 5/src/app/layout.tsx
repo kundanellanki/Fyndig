@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Outfit } from 'next/font/google';
+import { Cormorant_Garamond, Inter, Outfit } from 'next/font/google';
 import './globals.css';
 import { company, contact, siteUrl } from '@/data/company';
 import Background from '@/components/Background';
@@ -14,6 +14,17 @@ const outfit = Outfit({
   subsets: ['latin'],
   weight: ['200', '300', '400', '500', '600'],
   variable: '--font-outfit',
+  display: 'swap',
+});
+
+/**
+ * Serif face — used only by subgroup wordmarks (see SubgroupLogo), which are
+ * set in their own company's typeface rather than fyndig's.
+ */
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-cormorant',
   display: 'swap',
 });
 
@@ -59,7 +70,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
+    <html lang="en" className={`${inter.variable} ${outfit.variable} ${cormorant.variable}`}>
       <body className="font-sans antialiased">
         <a href="#main" className="skip-link">
           Skip to content
