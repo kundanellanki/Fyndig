@@ -108,7 +108,7 @@ export const subgroups: Subgroup[] = [
     pillars: ['Routes', 'Stays', 'Food', 'Budget'],
     founder: 'Aathif Hasan',
     locations: [],
-    status: 'Live',
+    status: 'In Development',
     // The Trip's own dark-theme tokens from thetrip.fyndig.in: sky blue on its
     // deep navy, the same pair the logo is drawn in.
     brand: {
@@ -147,45 +147,4 @@ export const subgroups: Subgroup[] = [
     },
     href: 'https://vindalia.fyndig.in',
   },
-  {
-    id: 'mansonsforge',
-    name: 'MansonsForge',
-    category: 'Construction Company',
-    tagline: '',
-    description: '',
-    services: [],
-    pillars: [],
-    locations: [],
-    founder: 'Kundan Ellanki',
-    status: 'Coming Soon',
-    brand: {
-      accent: '#EDA94A',
-      accentSoft: '#F7C68A',
-      tintFrom: '#2A3645',
-      tintTo: '#141C27',
-      wordmark: '#F6F2EA',
-    },
-    href: null,
-  },
-  {
-    id: 'flotel',
-    name: 'Flotel',
-    category: 'Floating Hotels',
-    tagline: '',
-    description: '',
-    services: [],
-    pillars: [],
-    locations: [],
-    founder: 'Kundan Ellanki',
-    status: 'Coming Soon',
-    brand: {
-      accent: '#3E8FD0',
-      accentSoft: '#8CC4E8',
-      tintFrom: '#12304F',
-      tintTo: '#0A1A2E',
-      wordmark: '#EAF3FB',
-    },
-    href: null,
-  },
 ];
-
